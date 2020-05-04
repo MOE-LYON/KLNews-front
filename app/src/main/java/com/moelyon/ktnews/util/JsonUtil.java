@@ -1,7 +1,10 @@
 package com.moelyon.ktnews.util;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.moelyon.ktnews.dto.Pagination;
 
 import java.util.List;
 
@@ -11,18 +14,40 @@ import java.util.List;
 public class JsonUtil {
 
     public static String beanToJson(Object bean){
-        return new Gson().toJson(bean);
+        return getGson().toJson(bean);
     }
 
     public static <T> T parseJson(String json,Class<T> Class){
-        Gson gson = new Gson();
+        Gson gson = getGson();
+
+        return gson.fromJson(json,Class);
+    }
+
+    public static <T> T parseJson(JsonElement json, Class<T> Class){
+        Gson gson = getGson();
 
         return gson.fromJson(json,Class);
     }
 
     public static <T> List<T>  parseJsonArray(String json, Class<T> Class){
-        Gson gson = new Gson();
+        Gson gson = getGson();
 
         return gson.fromJson(json, new TypeToken<List<T>>() {}.getType());
+    }
+    public static <T> List<T>  parseJsonArray(JsonElement json, Class<T> Class){
+        Gson gson = getGson();
+
+        return gson.fromJson(json, new TypeToken<List<T>>() {}.getType());
+    }
+    public static <T> Pagination<T>  parseJsonPagination(JsonElement json, Class<T> Class){
+        Gson gson = getGson();
+
+        return gson.fromJson(json, new TypeToken<Pagination<T>>() {}.getType());
+    }
+
+
+    private static Gson getGson(){
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        return gson;
     }
 }
