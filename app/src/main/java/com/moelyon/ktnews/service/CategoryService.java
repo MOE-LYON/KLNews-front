@@ -1,6 +1,7 @@
 package com.moelyon.ktnews.service;
 
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.moelyon.ktnews.dto.Category;
 import com.moelyon.ktnews.util.HttpUtil;
 import com.moelyon.ktnews.util.JsonUtil;
@@ -20,7 +21,7 @@ public class CategoryService {
         Request request = new Request.Builder().url(HttpUtil.getUrl("/category")).get().build();
         JsonObject json = HttpUtil.makeRequest(request);
 
-        List<Category> categories = JsonUtil.parseJsonArray(json.get("data"),Category.class);
+        List<Category> categories = JsonUtil.parseJsonArray(json.get("data"),new TypeToken<List<Category>>() {}.getType());
         return categories;
     }
 

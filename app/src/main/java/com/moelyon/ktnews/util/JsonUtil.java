@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.moelyon.ktnews.dto.Pagination;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 /**
@@ -34,15 +35,15 @@ public class JsonUtil {
 
         return gson.fromJson(json, new TypeToken<List<T>>() {}.getType());
     }
-    public static <T> List<T>  parseJsonArray(JsonElement json, Class<T> Class){
+    public static <T> List<T>  parseJsonArray(JsonElement json,Type type){
         Gson gson = getGson();
 
-        return gson.fromJson(json, new TypeToken<List<T>>() {}.getType());
+        return gson.fromJson(json,type);
     }
-    public static <T> Pagination<T>  parseJsonPagination(JsonElement json, Class<T> Class){
+    public static <T> Pagination<T>  parseJsonPagination(JsonElement json,Type type ){
         Gson gson = getGson();
 
-        return gson.fromJson(json, new TypeToken<Pagination<T>>() {}.getType());
+        return gson.fromJson(json, type);
     }
 
 

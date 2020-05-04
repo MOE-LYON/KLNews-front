@@ -19,6 +19,16 @@ public class News {
     private String frontImage;
     private String content;
 
+    public News() {
+    }
+
+    public News(String title, int cid, String frontImage, String content) {
+        this.title = title;
+        this.cid = cid;
+        this.frontImage = frontImage;
+        this.content = content;
+    }
+
     public int getId() {
         return id;
     }

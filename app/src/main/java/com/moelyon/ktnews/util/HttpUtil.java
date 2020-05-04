@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,7 +31,7 @@ public class HttpUtil {
 
             JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
 
-            if (jsonObject.get("code").getAsInt()!=200){
+            if (!response.isSuccessful() || jsonObject.get("code").getAsInt()!=200){
                 throw new RuntimeException("request error");
             }
             return jsonObject;
@@ -44,5 +45,5 @@ public class HttpUtil {
     public static String getUrl(String url){
         return String.format("%s%s",BaseUrl,url);
     }
-
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 }

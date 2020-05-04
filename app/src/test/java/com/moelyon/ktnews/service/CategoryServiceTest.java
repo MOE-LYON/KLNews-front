@@ -12,6 +12,7 @@ public class CategoryServiceTest {
 
     @Test
     public void getAll() {
+
         List<Category> categories = CategoryService.getAll();
         System.out.println(categories.size());
 

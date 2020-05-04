@@ -28,4 +28,14 @@ public class NewsServiceTest {
         System.out.println(news.getPublishDate());
         assertNotNull(news);
     }
+
+    @Test
+    public void createNews() {
+        News news = new News();
+    }
+
+    @Test
+    public void deleteById() {
+        boolean res = NewsService.deleteById(9);
+    }
 }

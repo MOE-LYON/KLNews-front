@@ -2,15 +2,20 @@ package com.moelyon.ktnews.service;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import com.moelyon.ktnews.dto.Category;
 import com.moelyon.ktnews.dto.News;
 import com.moelyon.ktnews.dto.Pagination;
 import com.moelyon.ktnews.util.HttpUtil;
 import com.moelyon.ktnews.util.JsonUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * @author moelyon
@@ -24,14 +29,33 @@ public class NewsService {
         }
         Request request = new Request.Builder().url(httpBuilder.build()).get().build();
         JsonObject json = HttpUtil.makeRequest(request);
-        Pagination<News> data = JsonUtil.parseJsonPagination(json.get("data"),News.class);
+
+        Pagination<News> data = JsonUtil.parseJsonPagination(json.get("data"),new TypeToken<Pagination<News>>() {}.getType());
         return  data;
     }
 
     public static News createNews(News news){
 
+        String jsonStr = JsonUtil.beanToJson(news);
+        RequestBody body = RequestBody.create(HttpUtil.JSON,jsonStr);
+        Request request = new Request.Builder().url(HttpUtil.getUrl("/news"))
+                .post(body).build();
 
-        return news;
+        JsonObject json = HttpUtil.makeRequest(request);
+
+        News res = JsonUtil.parseJson(json.get("data"),News.class);
+
+        return res;
+    }
+
+    public static boolean deleteById(int id){
+        HttpUrl url= HttpUrl.parse(HttpUtil.getUrl("/news")).newBuilder()
+                .addPathSegment(Integer.toString(id)).build();
+        Request request = new Request.Builder().url(url).delete().build();
+
+        JsonObject json = HttpUtil.makeRequest(request);
+
+        return json.get("code").getAsInt()==200;
     }
 
     public static News getNewsDetail(int id){
