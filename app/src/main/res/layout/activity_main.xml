@@ -17,17 +17,45 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dip"
+        android:background="#453B3B"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <GridView
+                    android:id="@+id/category_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnWidth="80dip"
+                    android:gravity="center"
+                    android:horizontalSpacing="5dp"
+                    android:listSelector="@android:color/holo_red_light"
+                    android:numColumns="auto_fit" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <GridView
-            android:id="@+id/category_list"
+        <ListView
+            android:id="@+id/news_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnWidth="90dip"
-            android:gravity="center"
-            android:horizontalSpacing="10dp"
-            android:listSelector="#00ffaa"
-            android:numColumns="auto_fit" />
+            android:layout_height="match_parent" />
     </LinearLayout>
+
 </LinearLayout>
