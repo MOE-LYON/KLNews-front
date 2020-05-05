@@ -69,4 +69,19 @@ public class NewsService {
 
         return  news;
     }
+
+    public static void updateNews(News news) {
+
+        HttpUrl url= HttpUrl.parse(HttpUtil.getUrl("/news")).newBuilder()
+                .addPathSegment(Integer.toString(news.getId())).build();
+        String json_str = JsonUtil.beanToJson(news);
+        RequestBody body = RequestBody.create(HttpUtil.JSON,json_str);
+        Request request = new Request.Builder().url(url).put(body).build();
+
+        JsonObject json = HttpUtil.makeRequest(request);
+
+        if(json.get("code").getAsInt()!=200){
+            throw new RuntimeException("update error");
+        }
+    }
 }
