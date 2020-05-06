@@ -1,5 +1,6 @@
 package com.moelyon.ktnews;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -73,19 +74,30 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("nid",news.getId());
             intent.putExtra("cid",news.getCid());
             intent.putExtra("cname",cname);
-            startActivity(intent);
+            startActivityForResult(intent,REQ_CODE);
         });
         add_btn.setOnClickListener((v)->{
 
             Intent intent = new Intent();
             intent.setClass(this,NewsEditActivity.class);
 
-            startActivity(intent);
-
+            //startActivity(intent);
+            startActivityForResult(intent,REQ_CODE);
 
         });
     }
 
+    public static final int REQ_CODE = 2333;
+    public static final int RES_CODE = 2334;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQ_CODE && resultCode==RES_CODE){
+            this.getNews();
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void getCategories(){

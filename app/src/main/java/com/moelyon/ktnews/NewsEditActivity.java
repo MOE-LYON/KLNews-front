@@ -133,12 +133,16 @@ public class NewsEditActivity extends AppCompatActivity {
         int cid = getCnameByCid(item);
 
         News news = new News(title.getText().toString(),
-                cid,"",content.getContext().toString());
+                cid,"http://5b0988e595225.cdn.sohucs.com/images/20180530/033a2301756f4b6cbccbaa5096e9f2ea.jpeg"
+                ,content.getText().toString());
 
         new Thread(()->{
             NewsService.createNews(news);
 
-            runOnUiThread(this::finish);
+            runOnUiThread(() -> {
+                setResult(MainActivity.RES_CODE);
+                finish();
+            });
         }).start();
     }
 

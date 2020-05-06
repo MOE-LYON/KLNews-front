@@ -51,6 +51,8 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         // event handler
         back_btn.setOnClickListener((v -> {
+
+            setResult(MainActivity.RES_CODE);
             finish();
         }));
 
@@ -112,7 +114,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
             runOnUiThread(()->{
                 Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
-
+                setResult(MainActivity.RES_CODE);
                 finish();
             });
         }).start();
